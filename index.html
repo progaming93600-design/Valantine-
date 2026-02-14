@@ -1,259 +1,266 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Will You Be My Valentine?</title>
+<title>For Sriju ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
 <style>
-*{
+body{
 margin:0;
-padding:0;
-box-sizing:border-box;
 font-family:'Poppins',sans-serif;
+overflow:hidden;
+background:linear-gradient(135deg,#ffd6e8,#ff6f91);
+color:white;
 }
 
-body{
-height:100vh;
-overflow:hidden;
-background:linear-gradient(135deg,#ffd1dc,#ff6f91);
+/* ---------- SLIDE 1 ---------- */
+
+#slide1{
+position:fixed;
+width:100%;
+height:100%;
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-color:#fff;
-position:relative;
-}
-
-.container{
-z-index:2;
-max-width:90%;
-}
-
-.bear{
-font-size:60px;
-animation:bounce 2s infinite;
-}
-@keyframes bounce{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-20px);}
 }
 
 h1{
 font-family:'Dancing Script',cursive;
 font-size:42px;
-margin-top:10px;
 }
 
 .subtitle{
+margin-top:15px;
 font-style:italic;
-margin:15px 0;
-font-size:18px;
-}
-
-.closing{
-margin-top:20px;
-font-size:18px;
 }
 
 .buttons{
 margin-top:40px;
 display:flex;
-justify-content:center;
 gap:40px;
-flex-wrap:wrap;
+}
+
+button{
+padding:12px 30px;
+border:none;
+border-radius:40px;
+cursor:pointer;
+font-size:18px;
 }
 
 #yesBtn{
 background:linear-gradient(45deg,#ff1744,#ff5252);
-color:#fff;
-border:none;
-padding:15px 40px;
-font-size:20px;
-border-radius:50px;
-cursor:pointer;
-transition:0.3s;
-box-shadow:0 0 15px rgba(255,0,0,0.6);
-}
-
-#yesBtn:hover{
-box-shadow:0 0 30px rgba(255,0,0,1);
-transform:scale(1.05);
+color:white;
 }
 
 #noBtn{
-background:#fff;
+background:white;
 color:#ff1744;
 border:2px solid #ff1744;
-padding:10px 30px;
-font-size:16px;
-border-radius:50px;
-cursor:pointer;
 position:relative;
-transition:0.3s;
+}
+
+.heartExplosion{
+position:fixed;
+font-size:24px;
+animation:explode 1s forwards;
+}
+
+@keyframes explode{
+0%{opacity:1; transform:scale(1);}
+100%{opacity:0; transform:scale(2) translateY(-100px);}
+}
+
+/* ---------- SLIDE 2 ---------- */
+
+#slide2{
+position:fixed;
+width:100%;
+height:100%;
+display:none;
+background:linear-gradient(135deg,#ffe5f0,#ffd6e8);
+overflow:hidden;
+}
+
+.diary{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#fffaf3;
+color:#333;
+padding:25px;
+width:80%;
+max-width:500px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+opacity:0;
+transition:1s;
+line-height:1.6;
 }
 
 .heart{
-position:fixed;
-bottom:-50px;
-font-size:20px;
-animation:floatUp linear infinite;
-opacity:0;
+position:absolute;
+width:120px;
+height:100px;
+background:#ffd6e8;
+transform:rotate(-10deg);
+clip-path:path("M10 30 Q 25 5 50 30 T 90 30 Q 90 60 50 90 Q 10 60 10 30 Z");
+opacity:0.7;
 }
 
-@keyframes floatUp{
-0%{transform:translateY(0); opacity:0;}
-10%{opacity:1;}
-90%{opacity:1;}
-100%{transform:translateY(-110vh); opacity:0;}
+.teddy{
+position:absolute;
+font-size:40px;
+transition:2s;
 }
 
-.celebration{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:linear-gradient(135deg,#ff6f91,#ff1744);
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:5;
-color:white;
-display:none;
-}
-
-.celebration h2{
-font-size:60px;
-animation:pulse 1s infinite;
-}
-
-@keyframes pulse{
-0%,100%{transform:scale(1);}
-50%{transform:scale(1.2);}
-}
-
-.spin{
-font-size:60px;
-margin:20px;
-animation:spin 2s linear infinite;
-}
-@keyframes spin{
-100%{transform:rotate(360deg);}
-}
-
-.confetti{
-position:fixed;
-width:10px;
-height:10px;
-opacity:0.9;
-animation:confettiFall 3s linear forwards;
-}
-
-@keyframes confettiFall{
-0%{transform:translateY(-10vh) rotate(0deg);}
-100%{transform:translateY(110vh) rotate(720deg);}
-}
-
-@media(max-width:600px){
-h1{font-size:32px;}
-}
 </style>
 </head>
-
 <body>
 
-<div class="container" id="mainContent">
-<div class="bear">🐻</div>
-<h1>Will You Be My Valentine, SRIJANI?</h1>
-<div class="subtitle">I will always stay with you .</div>
-<div class="closing">Every love story is beautiful, but <br> ours is my favourite</div>
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<!-- Slide 1 -->
+<div id="slide1">
+<h1>Will You Be My Valentine, Sriju?</h1>
+
+<div class="subtitle">
+I don’t know when exactly it happened…<br>
+but you slowly became my favourite person.
+</div>
+
+<div style="margin-top:20px;">
+And now I can’t imagine my days<br>without you in them.
+</div>
 
 <div class="buttons">
-<button id="yesBtn">Yes 💖</button>
+<button id="yesBtn">Yes ❤️</button>
 <button id="noBtn">No</button>
 </div>
 </div>
 
-<div class="celebration" id="celebration">
-<h2>Yayyyy!!</h2>
-<div class="spin">💃</div>
-<p>I love you forever</p>
+<!-- Slide 2 -->
+<div id="slide2">
+
+<div class="diary" id="diaryText">
+<b>Do you remember that day?</b><br><br>
+
+তোর মনে আছে সেই দিনটা…<br>
+যেদিন আমাদের প্রথম কথা বলা শুরু হয়েছিল?<br><br>
+
+আমি tuition-এ বোতলটা ফেলে এসেছিলাম,<br>
+আর তুই আমাকে মেসেজ করেছিলি সেটা জানানোর জন্য।<br><br>
+
+আজ ৩ বছর হয়ে গেছে সেই ঘটনাটার…<br>
+তবুও আমার জীবনের সবচেয়ে গুরুত্বপূর্ণ একটা দিন।<br><br>
+
+কখনও ভাবতেই পারিনি আমি এত lucky হবো।<br>
+ভাবতেই পারিনি তুই কোনোদিন রাজি হবি…<br><br>
+
+জানি তোর সাথে অনেক ঝগড়া করি…<br>
+কিন্তু জীবনে সব থেকে ভালোবাসার মানুষ তুই।<br><br>
+
+১২ November প্রথম সামনে দাঁড়িয়ে বলতে পেরেছিলাম —<br>
+আমি তোকে ভালবাসি।
+</div>
+
 </div>
 
 <script>
 
-// Floating Hearts
-for(let i=0;i<15;i++){
-let heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="💖";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(15+Math.random()*30)+"px";
-heart.style.animationDuration=(4+Math.random()*4)+"s";
-heart.style.animationDelay=Math.random()*5+"s";
-document.body.appendChild(heart);
-}
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
 
-// No Button Escape
-const noBtn=document.getElementById("noBtn");
-const yesBtn=document.getElementById("yesBtn");
-
-let messages=[
-"Nope, not an option!",
-"Try again!",
-"You sure about that?",
-"Not happening!",
-"Think again!"
+let messages = [
+"Are you sure? 🥺",
+"Try again…",
+"Not an option 😌",
+"Stop… now you’re hurting me 😭",
+"Think carefully, Sriju… ❤️"
 ];
 
-let msgIndex=0;
+let msgIndex = 0;
 
-function moveNoButton(){
-const yesRect=yesBtn.getBoundingClientRect();
-let x,y;
-
-do{
-x=Math.random()*(window.innerWidth-120);
-y=Math.random()*(window.innerHeight-50);
-}while(
-x<yesRect.right &&
-x+100>yesRect.left &&
-y<yesRect.bottom &&
-y+50>yesRect.top
-);
-
+noBtn.addEventListener("click", function(){
+let x = Math.random() * (window.innerWidth - 120);
+let y = Math.random() * (window.innerHeight - 60);
 noBtn.style.position="fixed";
-noBtn.style.left=x+"px";
-noBtn.style.top=y+"px";
-
-noBtn.innerText=messages[msgIndex];
-msgIndex=(msgIndex+1)%messages.length;
-}
-
-noBtn.addEventListener("click",moveNoButton);
-noBtn.addEventListener("touchstart",moveNoButton);
-
-// Yes Click Celebration
-document.getElementById("yesBtn").addEventListener("click",()=>{
-document.getElementById("mainContent").style.display="none";
-document.querySelectorAll(".heart").forEach(h=>h.remove());
-document.getElementById("celebration").style.display="flex";
-
-for(let i=0;i<120;i++){
-let conf=document.createElement("div");
-conf.className="confetti";
-conf.style.left=Math.random()*100+"vw";
-conf.style.background="hsl("+Math.random()*360+",100%,50%)";
-conf.style.animationDuration=(2+Math.random()*3)+"s";
-conf.style.width=5+Math.random()*8+"px";
-conf.style.height=5+Math.random()*8+"px";
-document.body.appendChild(conf);
-}
+noBtn.style.left = x+"px";
+noBtn.style.top = y+"px";
+noBtn.innerText = messages[msgIndex];
+msgIndex = (msgIndex + 1) % messages.length;
 });
+
+yesBtn.addEventListener("click", function(){
+
+// play music
+let music = document.getElementById("bgMusic");
+music.volume = 0.3;
+music.play();
+
+// heart explosion
+for(let i=0;i<20;i++){
+let heart = document.createElement("div");
+heart.className="heartExplosion";
+heart.innerHTML="💖";
+heart.style.left = Math.random()*100+"vw";
+heart.style.top = Math.random()*100+"vh";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),1000);
+}
+
+setTimeout(()=>{
+document.getElementById("slide1").style.display="none";
+document.getElementById("slide2").style.display="block";
+animateTeddies();
+},1500);
+
+});
+
+function animateTeddies(){
+
+for(let i=0;i<4;i++){
+
+let teddy = document.createElement("div");
+teddy.className="teddy";
+teddy.innerHTML="🧸";
+teddy.style.left=Math.random()*80+"vw";
+teddy.style.top="100vh";
+document.getElementById("slide2").appendChild(teddy);
+
+setTimeout(()=>{
+teddy.style.top=Math.random()*60+"vh";
+},100);
+
+setTimeout(()=>{
+dropHeart(teddy);
+},2000);
+
+}
+
+}
+
+function dropHeart(teddy){
+
+let heart=document.createElement("div");
+heart.className="heart";
+heart.style.left=teddy.style.left;
+heart.style.top=teddy.style.top;
+heart.style.background=["#ffd6e8","#ffe5cc","#e6d6ff","#d6f0ff"][Math.floor(Math.random()*4)];
+document.getElementById("slide2").appendChild(heart);
+
+teddy.style.opacity="0";
+
+setTimeout(()=>{
+document.getElementById("diaryText").style.opacity="1";
+},1500);
+
+}
 
 </script>
 
