@@ -50,11 +50,14 @@
         .final-line { margin-bottom: 22px; opacity: 0; transform: translateY(20px); transition: all 1.8s ease; font-size: 1.1rem; }
         .reveal { opacity: 1 !important; transform: translateY(0) !important; }
 
+        /* Restored Twinkling Stars */
         .star { position: absolute; background: white; border-radius: 50%; opacity: 0; animation: softTwinkle var(--d) infinite ease-in-out; }
         @keyframes softTwinkle { 0%, 100% { opacity: 0.1; transform: scale(0.8); } 50% { opacity: 0.7; transform: scale(1.1); } }
 
+        /* Restored Heart Animation */
         .heart-float { position: fixed; pointer-events: none; animation: floatUp linear forwards; z-index: 1; }
         @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.8; } 100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
+        
         .teddy { font-size: 55px; position: fixed; transition: all 2.5s ease; z-index: 100; }
         .fade-out { opacity: 0 !important; pointer-events: none; }
     </style>
@@ -129,6 +132,22 @@
         const noMessages = ["Try again", "Not an option", "wait you are hurting me 😭", "Think carefully sriju ...❤️"];
         const music = document.getElementById('bg-music');
 
+        // Continuous Floating Hearts
+        function createHeart() {
+            const h = document.createElement('div'); h.className = 'heart-float'; h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw'; h.style.bottom = '-50px';
+            h.style.fontSize = (Math.random()*20+15)+'px'; h.style.animationDuration = (Math.random()*3+4)+'s';
+            document.body.appendChild(h); setTimeout(() => h.remove(), 6000);
+        }
+        setInterval(createHeart, 500);
+
+        // Heart Burst Function
+        function heartBurst() {
+            for(let i=0; i<30; i++) {
+                setTimeout(createHeart, i * 50);
+            }
+        }
+
         function moveNo() {
             const n = document.getElementById('no-btn'); const y = document.getElementById('yes-btn');
             if (msgIdx < noMessages.length) { n.innerText = noMessages[msgIdx]; msgIdx++; }
@@ -137,7 +156,6 @@
             n.style.position = 'fixed'; n.style.left = Math.random() * 70 + 'vw'; n.style.top = Math.random() * 70 + 'vh';
         }
 
-        // SMOOTH VOLUME TRANSITION
         function fadeVolume(target, duration) {
             let start = music.volume;
             let diff = target - start;
@@ -154,12 +172,12 @@
         }
 
         function goToTransition() {
-            music.volume = 0;
-            music.play().catch(e => console.log("Music ready"));
+            music.volume = 0; music.play();
             document.getElementById('main-container').classList.add('fade-out');
             setTimeout(() => {
                 document.getElementById('main-container').style.display='none';
                 document.getElementById('iknew-text').style.display='block';
+                heartBurst(); // RESTORED BURST
                 setTimeout(() => { 
                     document.getElementById('iknew-text').classList.add('fade-out'); 
                     setTimeout(spawnTeddies, 1000); 
@@ -182,17 +200,16 @@
         }
 
         function showDiary() {
-            fadeVolume(1.0, 1500); // SLIDE 2: FULL VOLUME
+            fadeVolume(1.0, 1500);
             const s2 = document.getElementById('second-slide'); s2.style.display='block'; setTimeout(() => s2.style.opacity='1', 100);
         }
 
         function startSlide3() {
-            fadeVolume(0.25, 1000); // SLIDE 3: GAME VOLUME (Low)
+            fadeVolume(0.25, 1000);
             document.getElementById('second-slide').style.display='none';
             document.getElementById('game-slide').style.display='block'; initGame();
         }
 
-        // GAME LOGIC (FPS LOCKED AT 60)
         const canvas = document.getElementById('game-canvas'); const ctx = canvas.getContext('2d');
         const failMsgs = ["Choriye debo😤", "Kotha bolbo na🥺", "Ar ekta kotha bolbi na amar sathe🚫"];
         let heartY, velocity, pipes, score, gameActive, lastTime; 
@@ -242,10 +259,10 @@
         }
 
         function goToSlide4() {
-            fadeVolume(0.7, 2500); // SLIDE 4: FINAL VOLUME (Emotional)
+            fadeVolume(0.7, 2500);
             document.getElementById('game-slide').style.display = 'none';
             const s4 = document.getElementById('final-slide'); s4.style.display = 'flex';
-            createStars();
+            createStars(); // RESTORED TWINKLE
             const lines = document.querySelectorAll('.final-line');
             lines.forEach((line, i) => { setTimeout(() => line.classList.add('reveal'), (i + 1) * 1600); });
         }
@@ -264,3 +281,4 @@
     </script>
 </body>
 </html>
+
