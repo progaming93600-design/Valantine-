@@ -23,7 +23,7 @@
             overflow: hidden;
         }
 
-        /* --- The "Wrapping Paper" Background --- */
+        /* --- Floating Balloon Layer --- */
         #bg {
             position: fixed;
             top: 0;
@@ -31,27 +31,33 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+            pointer-events: none;
         }
 
         .balloon {
             position: absolute;
             bottom: -250px;
-            /* This makes them float up and sway side-to-side */
-            animation: floatUp 8s linear infinite, sway 3s ease-in-out infinite alternate;
+            width: 70px; /* Adjusted for your red balloon image */
+            height: auto;
+            /* Smooth floating and swaying physics */
+            animation: floatUp 9s linear infinite, sway 3s ease-in-out infinite alternate;
+            z-index: 2;
+            opacity: 0.8;
         }
 
         @keyframes floatUp {
             0% { transform: translateY(0); opacity: 0; }
             10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
             100% { transform: translateY(-130vh); opacity: 0; }
         }
 
         @keyframes sway {
-            0% { transform: translateX(-25px); }
-            100% { transform: translateX(25px); }
+            0% { margin-left: -25px; transform: rotate(-5deg); }
+            100% { margin-left: 25px; transform: rotate(5deg); }
         }
 
-        /* --- The Surprise Cards --- */
+        /* --- Content Cards --- */
         .card {
             position: relative;
             z-index: 10;
@@ -60,8 +66,16 @@
             border-radius: 45px;
             text-align: center;
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            width: 320px;
+            width: 85%;
+            max-width: 320px;
             border: 10px solid #fff;
+            /* Simple fade-in animation for page changes */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .main-img {
@@ -70,22 +84,26 @@
             margin-bottom: 10px;
         }
 
-        h1 { color: var(--text-purple); font-size: 24px; margin: 10px 0; }
-        p { color: #888; margin-bottom: 25px; }
+        h1 { color: var(--text-purple); font-size: 24px; margin: 10px 0; line-height: 1.2; }
+        p { color: #888; font-size: 15px; margin-bottom: 25px; line-height: 1.4; }
 
         .btn {
             background: var(--btn-pink);
             color: var(--text-purple);
             border: none;
-            padding: 15px;
-            border-radius: 30px;
+            padding: 16px;
+            border-radius: 35px;
             width: 100%;
             font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
-            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .btn:active { transform: scale(0.95); }
+        .btn:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -96,7 +114,9 @@
         <img src="https://media.tenor.com/vH977C-Vv9IAAAAi/milk-and-mocha-hug.gif" class="main-img">
         <h1>A Cutiepie was born today, 21 years ago!</h1>
         <p>Yes, it's YOU! A little surprise awaits...</p>
-        <button class="btn" onclick="nextPage()">🎁 Start the surprise</button>
+        <button class="btn" onclick="nextPage('page1', 'page2')">
+            <span>🎁</span> Start the surprise
+        </button>
     </div>
 
     <div class="card" id="page2" style="display:none;">
@@ -104,15 +124,23 @@
         <h1>First of all...</h1>
         <p style="color: var(--text-purple); font-weight: bold;">I want to tell you how amazing you are!</p>
         <p>You make every day brighter just by being in it. ✨</p>
-        <button class="btn" onclick="alert('Ready for the finale on Page 3?')">Next ➡️</button>
+        <button class="btn" onclick="nextPage('page2', 'page3')">
+            Next ➡️
+        </button>
+    </div>
+
+    <div class="card" id="page3" style="display:none;">
+        <h1 style="font-size: 32px;">🎂 Happy 21st! 🎂</h1>
+        <p style="color: var(--text-purple); font-weight: bold; font-size: 18px;">Cheers to a new chapter! ❤️</p>
+        <p>May your year be full of love, laughter, and all the happiness in the world. You deserve it all!</p>
+        <p style="font-size: 12px; color: #ccc; margin-top: 10px;">Keep shining, Birthday Star!</p>
     </div>
 
     <script>
         const bg = document.getElementById('bg');
         
-        /* IMPORTANT: Make sure your balloon image file 
-           is named "balloon.jpg" and is in the same folder 
-           on GitHub as this index.html file!
+        /* This points directly to the file in your repository.
+           Make sure your file is named exactly balloon.jpg 
         */
         const myBalloon = "balloon.jpg"; 
 
@@ -120,24 +148,28 @@
             const img = document.createElement('img');
             img.src = myBalloon;
             img.className = 'balloon';
-            img.style.left = Math.random() * 100 + "vw";
-            img.style.width = "65px";
+            
+            // Random horizontal position
+            img.style.left = Math.random() * 90 + "vw";
+            
+            // Variety in floating speeds
+            const speed = 7 + Math.random() * 5;
+            img.style.animationDuration = speed + "s, 3s";
             
             bg.appendChild(img);
             
-            // Clean up to keep the browser running smoothly
-            setTimeout(() => img.remove(), 8000);
+            // Clean up memory after balloon floats away
+            setTimeout(() => img.remove(), speed * 1000);
         }
 
-        // Send a new balloon up every 1.5 seconds
+        // Generate a new balloon every 1.5 seconds
         setInterval(createBalloon, 1500);
 
-        // Function to switch cards
-        function nextPage() {
-            document.getElementById('page1').style.display = 'none';
-            document.getElementById('page2').style.display = 'block';
+        // Function to handle smooth card transitions
+        function nextPage(currentId, nextId) {
+            document.getElementById(currentId).style.display = 'none';
+            document.getElementById(nextId).style.display = 'block';
         }
     </script>
 </body>
 </html>
-
